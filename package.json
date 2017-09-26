@@ -1,0 +1,29 @@
+{
+  "name": "liri-node-app",
+  "version": "1.0.0",
+  "description": "A Node.js App for homework",
+  "main": "index.js",
+  "dependencies": {
+    "node-spotify-api": "^1.0.7",
+    "twit": "^2.2.9"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "console.log(\"Testing!\")"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FelixSolon/liri-node-app.git"
+  },
+  "keywords": [
+    "LIRI",
+    "homework",
+    "node.js"
+  ],
+  "author": "Eric Stanulis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FelixSolon/liri-node-app/issues"
+  },
+  "homepage": "https://github.com/FelixSolon/liri-node-app#readme"
+}
