@@ -24,7 +24,6 @@ var client = new Twitter({
 
 //Because I don't feel like typing process.argv a zillion times.
 var inputCommand = process.argv;
-console.log(inputCommand);
 
 //added the "Log All The Things!" bonus.
 function logAllTheThings (logData){
