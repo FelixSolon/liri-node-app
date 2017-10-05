@@ -143,6 +143,9 @@ function uglySwitchStatement(inputCommand){
               dataArr.unshift("","")
               uglySwitchStatement(dataArr)
               });
+            break;
+        default:
+            console.log("I'm sorry, that's not a valid command");
     };
 
 };
