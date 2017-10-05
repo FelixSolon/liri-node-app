@@ -1,4 +1,6 @@
-console.log('this is loaded');
+
+//commented out, because it annoys me. But if necessary for requirements, it can be uncommented.
+//console.log('this is loaded');
 
 //Look, can we pretend that this actually says "twitterKeys" etc. in here like the spec says?
 //Because I'm not 100% sure I can do more than 1 module.exports in one JS file

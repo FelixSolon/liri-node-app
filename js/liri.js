@@ -24,6 +24,7 @@ var client = new Twitter({
 
 //Because I don't feel like typing process.argv a zillion times.
 var inputCommand = process.argv;
+console.log(inputCommand);
 
 //added the "Log All The Things!" bonus.
 function logAllTheThings (logData){
@@ -32,10 +33,6 @@ function logAllTheThings (logData){
         // If an error was experienced we say it.
         if (err) {
             console.log(err);
-        }
-        // If no error is experienced, we'll log the phrase "Content Added" to our node console.
-        else {
-            console.log("Content Added!");
         }
     });
 };
