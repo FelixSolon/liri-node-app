@@ -1,32 +1,15 @@
-//Grabbing keys, and a zillion packages.
-var keys = require('./keys.js');
-var Twitter = require('twitter');
-var Spotify = require('node-spotify-api');
+// Initialize necessary variables
+
+require('dotenv').config()
+const { spotifyKeys, twitterKeys } = require('./keys.js');
 var request = require('request');
 var fs = require("fs");
-var spotify = require('spotify');
-
-//pulls all the keys out of the keys.js file
-var consumerKey = (keys.consumer_key);
-var consumerSecret = keys.consumer_secret;
-var accessTokenKey = keys.access_token_key;
-var accessTokenSecret = keys.access_token_secret;
-var spotifyId = keys.spotifyId;
-var spotifySecret = keys.spotifySecret;
-
-//initializes the Twitter package
-var client = new Twitter({
-  consumer_key: consumerKey,
-  consumer_secret: consumerSecret,
-  access_token_key: accessTokenKey,
-  access_token_secret: accessTokenSecret
-});
 
 //Because I don't feel like typing process.argv a zillion times.
 var inputCommand = process.argv;
 
 //added the "Log All The Things!" bonus.
-function logAllTheThings (logData){
+function logToFile (logData){
     console.log(logData);
     fs.appendFile("log.txt", logData + "\n", function(err) {
         // If an error was experienced we say it.
@@ -47,14 +30,17 @@ function uglySwitchStatement(inputCommand){
     switch (inputCommand[2]){
 
         case "my-tweets":
+        
+            const Twitter = require('twitter');
+            const client = new Twitter(twitterKeys);
             //Setting up the API call through the Twitter package
-            var params = {user_id: "TestyStudent", count: 20}
+            const params = {user_id: "TestyStudent", count: 20}
             client.get("https://api.twitter.com/1.1/statuses/user_timeline.json", params, function(error, tweets, response){
                 //Bog-standard for loop to print everything.
-                for (var i = 0; i < tweets.length; i++) {
-                    logAllTheThings("")//I could do /nl if I wanted to. But I don't.
-                    logAllTheThings(tweets[i].text);
-                    logAllTheThings(tweets[i].created_at);
+                for (let i = 0; i < tweets.length; i++) {
+                    logToFile("")//I could do /nl if I wanted to. But I don't.
+                    logToFile(tweets[i].text);
+                    logToFile(tweets[i].created_at);
                 };
             })
             //Don't forget your breaks, kids! Or *everything* can run.
@@ -64,19 +50,17 @@ function uglySwitchStatement(inputCommand){
             //Defining the function inside the switch statement, just to be different.
             //Yeah, there's not really a reason for it to be here instead of up top.
             //ToDo: Put the client = new Twitter() thing into the my-tweets switch
-            var spotify = new Spotify({
-                id: spotifyId,
-                secret: spotifySecret
-            });
+            const Spotify = require('node-spotify-api');
+            const spotify = new Spotify(spotifyKeys);
             //Defining query as an empty string
             //Because "undefinedNever Gonna Give You Up" doesn't return any results.
-            var query = "";
+            let query = "";
             //checks to see if anyone bothered to put in a search term
             if(inputCommand[3] === undefined){
                 query = "The Sign Ace of Base";
             }
             //assembles a query
-            for (var i = 3; i < inputCommand.length; i++) {
+            for (let i = 3; i < inputCommand.length; i++) {
                 query = query + inputCommand[i] + " "
             }
             //calls the spotify search
@@ -84,13 +68,13 @@ function uglySwitchStatement(inputCommand){
                 if (err) {
                 return console.log('Error occurred: ' + err);
               }
-              //Refactoring the result
-              var songResult = data.tracks.items[0];
-            logAllTheThings(""); //because no one has time for /nl
-            logAllTheThings("Artist: " + songResult.artists[0].name); 
-            logAllTheThings("Song Name: " + songResult.name)
-            logAllTheThings("Preview URL: " + songResult.external_urls.spotify)
-            logAllTheThings("Album: " + songResult.album.name)
+            //Refactoring the result
+            const songResult = data.tracks.items[0];
+            logToFile(""); //because no one has time for /nl
+            logToFile("Artist: " + songResult.artists[0].name); 
+            logToFile("Song Name: " + songResult.name)
+            logToFile("Preview URL: " + songResult.external_urls.spotify)
+            logToFile("Album: " + songResult.album.name)
             });
 
             break;
@@ -121,7 +105,7 @@ function uglySwitchStatement(inputCommand){
                 //Fine. I'll use a new line in this one. In fact, I shall use ALL the new lines! Mwahaha!
                 //Mostly just to prove that I can do it.
                 //Realistically, this would be annoying to maintain and, unless there's some performance increase I'm not expecting from running one console.log instead of 9 I'd just do 9 console.logs normally.
-                logAllTheThings("\nMovie Title: " + movie.Title + "\nMovie Year: " + movie.Year + "\nIMDB Rating: " + movie.imdbRating + "\n" + movie.Ratings[1].Source + " rating: " + movie.Ratings[1].Value + "\nCountry: " + movie.Country + "\nLanguage: " + movie.Language + "\nPlot: " + movie.Plot + "\nActors: " + movie.Actors);
+                logToFile("\nMovie Title: " + movie.Title + "\nMovie Year: " + movie.Year + "\nIMDB Rating: " + movie.imdbRating + "\n" + movie.Ratings[1].Source + " rating: " + movie.Ratings[1].Value + "\nCountry: " + movie.Country + "\nLanguage: " + movie.Language + "\nPlot: " + movie.Plot + "\nActors: " + movie.Actors);
             });
             break;
 
